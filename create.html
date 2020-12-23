@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en-US">
+ <head>
+  <meta name="viewport" content="width=device-width">
+  <meta charset="utf-8">
+  <title>Create Article</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="title" content="Create Article">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    * {
+      outline: none;
+    }
+  </style>
+</head>
+ <body>
+  <div id="__next">
+   <div>
+    <header style="display:flex;justify-content:center;border-bottom:2px solid #dedede">
+     <div style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:980px;padding:10px 40px;color:#555">
+      <div style="display:flex;height:30px;width:30px;cursor:pointer;justify-content:space-around;flex-direction:column">
+       <div style="height:4px;width:100%;background:#999;border-radius:3px"></div>
+       <div style="height:4px;width:100%;background:#999;border-radius:3px"></div>
+       <div style="height:4px;width:100%;background:#999;border-radius:3px"></div>
+      </div><a href="/" style="display:flex;align-items:center;cursor:pointer"><span style="margin-right:5px;font-weight:600">quikker</span> <span style="font-size:30px">🦊</span> <span style="margin-left:5px;font-weight:600">tutorials</span></a>
+      <div style="display:flex;height:30px;width:30px;justify-content:space-around;flex-direction:column"></div>
+     </div>
+    </header>
+    <div style="display:flex;flex-direction:column;align-items:center;padding:40px;background:#dedede">
+     <div style="position:fixed;top:10px;left:10px;height:20px;width:20px;background:#b9b9b9;cursor:pointer"></div>
+     <main style="display:flex;flex-direction:initial;max-width:100%;align-items:initial;min-height:800px;justify-content:center;width:100%;padding:0">
+      <article style="display:flex;flex:1;width:50%;flex-direction:column;background:#f9f9f9;padding:40px">
+       <textarea id="textarea" style="display:flex;font-family:sans-serif;flex:1;resize:none;border:0;background:0"></textarea>
+      </article>
+      <article id="article" style="display:flex;flex:1;width:50%;max-width:100%;flex-direction:column;background:#eee;padding:40px">
+        <h1 id="h1title"></h1>
+        <h2 id="h2sub_header"></h2>
+        <div id="target"></div>
+      </article>
+     </main>
+     <div style="display:flex;border-radius:10px;flex-direction:column;padding:20px;margin:100px 0px;max-width:900px;width:100%">
+      <div style="font-size:22px;margin:0px 0px 10px 0px">
+       Publish Article at https://quikker.com/<span id="sluggo"></span>
+      </div>
+      <div style="font-size:14px;margin:0px 0px 5px 5px">
+       h1 &amp; title
+      </div>
+      <input id="title" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="How to do app.get in express">
+      <div style="font-size:14px;margin:0px 0px 5px 5px">
+       sub header
+      </div>
+      <input id="sub_header" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="Express get guide">
+      <div style="font-size:14px;margin:0px 0px 5px 5px">
+       tags <span id="article_tags"></span>
+      </div>
+      <input id="tags" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="javascript, nextjs">
+      <div style="display:flex">
+       <div id="add_article" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff">
+        Add Article to Queue
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script src="/js/markdown.js"></script>
+  <script src="/js/slugify.js"></script>
+  <script src="/js/highlight.js"></script>
+  <script>
+    let body = ''
+    let title = ''
+    let sub_header = ''
+    let slug = ''
+    let tags = ''
+
+    const markdown = new markdownit({
+      highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(lang, str).value;
+          } catch (__) {}
+        }
+        
+        return ''
+      }
+    })
+
+    document.getElementById('title').addEventListener('keyup', evt => {
+      title = evt.target.value
+      slug = slugify(title)
+      document.getElementById('h1title').innerHTML = title
+      document.getElementById('sluggo').innerHTML = slug
+    })
+
+    document.getElementById('sub_header').addEventListener('keyup', evt => {
+      sub_header = evt.target.value
+      document.getElementById('h2sub_header').innerHTML = sub_header
+    })
+
+    document.getElementById('tags').addEventListener('keyup', evt => {
+      tags = evt.target.value.split(' ')
+      document.getElementById('article_tags').innerHTML = tags.reduce((sum, tag) => sum += `<span style="padding: 1px 3px 3px 3px; border-radius: 3px; background: #000; color: #fff; margin-right: 3px;">${tag}</span>`, '')
+    })
+
+    document.getElementById('add_article').addEventListener('click', evt => {
+      console.log('ok?')
+      console.log(title, sub_header, slug, body)
+      fetch('/api/post', {
+        method: 'post',
+        body: JSON.stringify({title, slug, sub_header, body, tags}),
+        headers: { 'Content-Type': 'application/json' },
+      })
+    })
+
+    setInterval(() => {
+      const current_body = document.getElementById('textarea').value
+      if (current_body != body) {
+        body = current_body
+        document.getElementById('target').innerHTML = markdown.render(current_body)
+        console.log(current_body)
+      }
+    }, 200)
+
+  </script>
+ </body>
+</html>

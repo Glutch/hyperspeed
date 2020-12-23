@@ -1,0 +1,92 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0px;
+  background: #000;
+  font-size: 18px;
+  color: #fff;
+}
+.logo {
+  opacity: 0.3;
+  transition: 0.3s;
+}
+.logo:hover {
+  opacity: 1;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+code {
+  padding: 3px 4px 3px 4px;
+  border-radius: 3px;
+  background: #111;
+  color: #fff;
+  font-family: 'Fira Code';
+}
+.language-js {
+  white-space: break-spaces;
+  background: #1f1f1f;
+  color: #fff;
+  display: block;
+  padding: 20px;
+  margin: 0 -20px 0 -20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Fira Code';
+}
+.hljs-params {
+  color: red;
+}
+.hljs-attr {
+  color: yellow;
+}
+.hljs-keyword {
+  color: #8b8bff;
+}
+.hljs-function {
+  color: #8b8bff;
+}
+.hljs-built_in {
+  color: #8b8bff;
+}
+.hljs-comment {
+  color: green;
+}
+.hljs-string {
+  color: #52f17c;
+}
+.hljs-number {
+  color: #ff5c5c;
+}
+h1 {
+  font-size: 40px;
+  margin: 0;
+  margin-bottom: 10px;
+  outline: none;
+}
+h2 {
+  font-size: 26px;
+  color: #999;
+  margin: 0;
+  margin-bottom: 10px;
+  outline: none;
+  font-weight: 500;
+}
+main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 0px;
+}
+article {
+  max-width: 1000px;
+  width: 100%;
+  padding: 0px 40px;
+}
+* {
+  box-sizing: border-box;
+  outline: none;
+}

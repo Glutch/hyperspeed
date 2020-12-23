@@ -1,0 +1,21 @@
+{
+  "name": "hyperspeed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "color-hash": "^1.0.3",
+    "express": "^4.17.1",
+    "highlight.js": "^10.4.1",
+    "html-prettify": "^1.0.3",
+    "markdown-it": "^12.0.4",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.8"
+  }
+}
