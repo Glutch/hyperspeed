@@ -49,9 +49,7 @@ const generate_article = (article, content) => prettify(`
     <title>${article.title}</title>
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:wght@400;500;800&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:wght@400;500;800&display=swap">
+    <link rel="preload" href="fonts/FiraCode-Medium.ttf" as="font">
   </head>
   <body>
     ${header}
@@ -72,8 +70,7 @@ const generate_index = content => prettify(`
     <title>quikker</title>
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:wght@400;500;800&display=swap" as="style">
+    <link rel="preload" href="fonts/FiraCode-Medium.ttf" as="font">
   </head>
   <body>
     ${header}
@@ -118,15 +115,14 @@ const create_index = async () => {
     console.log('index.html', 'created')
     return 'complete'
   })
-  
 }
 
 module.exports = { create_article, create_index}
 
-const recreate = async () => {
-  const articles = await Article.find().sort({date: -1})
-  articles.map(article => create_article(article))
-}
+// const recreate = async () => {
+//   const articles = await Article.find().sort({date: -1})
+//   articles.map(article => create_article(article))
+// }
 
-recreate()
-create_index()
+// recreate()
+// create_index()

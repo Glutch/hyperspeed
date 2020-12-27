@@ -21,23 +21,18 @@
  <body>
   <div id="__next">
    <div>
-    <header style="display:flex;justify-content:center;border-bottom:2px solid #dedede">
-     <div style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:980px;padding:10px 40px;color:#555">
-      <div style="display:flex;height:30px;width:30px;cursor:pointer;justify-content:space-around;flex-direction:column">
-       <div style="height:4px;width:100%;background:#999;border-radius:3px"></div>
-       <div style="height:4px;width:100%;background:#999;border-radius:3px"></div>
-       <div style="height:4px;width:100%;background:#999;border-radius:3px"></div>
-      </div><a href="/" style="display:flex;align-items:center;cursor:pointer"><span style="margin-right:5px;font-weight:600">quikker</span> <span style="font-size:30px">🦊</span> <span style="margin-left:5px;font-weight:600">tutorials</span></a>
-      <div style="display:flex;height:30px;width:30px;justify-content:space-around;flex-direction:column"></div>
-     </div>
+    <header style="display: flex; justify-content: center;">
+      <a title="home" href='/' style="display: flex; align-items: center; cursor: pointer; color: inherit; text-decoration: none;">
+        <img alt="logo" class="logo" height="40px" width="40px" style="margin-top: -3px;" src="/logo.svg"/>
+      </a>
     </header>
-    <div style="display:flex;flex-direction:column;align-items:center;padding:40px;background:#dedede">
-     <div style="position:fixed;top:10px;left:10px;height:20px;width:20px;background:#b9b9b9;cursor:pointer"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding:40px;background:#000">
+     <div id="toggle" style="position:fixed;top:10px;left:10px;height:20px;width:20px;background:#b9b9b9;cursor:pointer"></div>
      <main style="display:flex;flex-direction:initial;max-width:100%;align-items:initial;min-height:800px;justify-content:center;width:100%;padding:0">
-      <article style="display:flex;flex:1;width:50%;flex-direction:column;background:#f9f9f9;padding:40px">
+      <article id="textareaBox" style="display:flex;flex:1;width:50%;flex-direction:column;background:#f9f9f9;padding:40px">
        <textarea id="textarea" style="display:flex;font-family:sans-serif;flex:1;resize:none;border:0;background:0"></textarea>
       </article>
-      <article id="article" style="display:flex;flex:1;width:50%;max-width:100%;flex-direction:column;background:#eee;padding:40px">
+      <article id="article" style="display:flex;flex:1;width:50%;max-width:100%;flex-direction:column;background:#000;padding:40px">
         <h1 id="h1title"></h1>
         <h2 id="h2sub_header"></h2>
         <div id="target"></div>
@@ -60,7 +55,7 @@
       </div>
       <input id="tags" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="javascript, nextjs">
       <div style="display:flex">
-       <div id="add_article" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff">
+       <div id="add_article" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
         Add Article to Queue
        </div>
       </div>
@@ -77,6 +72,7 @@
     let sub_header = ''
     let slug = ''
     let tags = ''
+    let toggled = true
 
     const markdown = new markdownit({
       highlight: function (str, lang) {
@@ -102,13 +98,17 @@
       document.getElementById('h2sub_header').innerHTML = sub_header
     })
 
+    document.getElementById('toggle').addEventListener('click', evt => {
+      toggled = !toggled
+      document.getElementById('textareaBox').style.display = toggled ? 'flex' : 'none'
+    })
+
     document.getElementById('tags').addEventListener('keyup', evt => {
       tags = evt.target.value.split(' ')
       document.getElementById('article_tags').innerHTML = tags.reduce((sum, tag) => sum += `<span style="padding: 1px 3px 3px 3px; border-radius: 3px; background: #000; color: #fff; margin-right: 3px;">${tag}</span>`, '')
     })
 
     document.getElementById('add_article').addEventListener('click', evt => {
-      console.log('ok?')
       console.log(title, sub_header, slug, body)
       fetch('/api/post', {
         method: 'post',
@@ -122,9 +122,8 @@
       if (current_body != body) {
         body = current_body
         document.getElementById('target').innerHTML = markdown.render(current_body)
-        console.log(current_body)
       }
-    }, 200)
+    }, 500)
 
   </script>
  </body>

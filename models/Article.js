@@ -7,6 +7,7 @@ const ArticleSchema = new mongoose.Schema({
   body: String,
   tags: Array,
   slug: String,
+  published: Boolean,
 })
 
 module.exports = mongoose.models.Article || mongoose.model('Article', ArticleSchema)
