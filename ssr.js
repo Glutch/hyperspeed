@@ -124,4 +124,4 @@ const recreate = async () => {
   create_index()
 }
 
-// recreate()
+recreate()
