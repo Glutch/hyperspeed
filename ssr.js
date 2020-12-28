@@ -104,7 +104,7 @@ const create_index = async () => {
       <a href="/${article.slug}" style="padding: 20px; background: #000; margin-bottom: 10px; width: 100%; max-width: 900px; border-bottom: 2px solid #222">
         <div style="display: flex; align-items: center;">
           ${article.tags && article.tags.reduce((sum, tag) => sum += `<div style="padding: 3px 5px; color: #000; font-size: 12px; background: #fff; border-radius: 2px; margin-right: 5px">${tag}</div>`, '')}
-          <div style="font-size: 14px; color: #999">${moment(new Date(article.date)).format('MMMM Do YYYY')}</div>
+          <div style="font-size: 14px; color: #999">${moment(article.date).format('MMMM Do YYYY')}</div>
         </div>
         <h1 style="margin-top: 10px; margin-bottom: 0; font-size: 34px">${article.title}</h1>
         <h2 style="margin-top: 0; font-size: 24px">${article.sub_header}</h2>
@@ -118,10 +118,10 @@ const create_index = async () => {
 
 module.exports = { create_article, create_index}
 
-// const recreate = async () => {
-//   const articles = await Article.find({published: true}).sort({date: -1})
-//   articles.map(article => create_article(article))
-// }
+const recreate = async () => {
+  const articles = await Article.find({published: true}).sort({date: -1})
+  articles.map(article => create_article(article))
+  create_index()
+}
 
 // recreate()
-// create_index()

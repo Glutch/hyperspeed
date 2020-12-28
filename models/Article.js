@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ArticleSchema = new mongoose.Schema({
-  date: String,
+  date: Number,
   title: String,
   sub_header: String,
   body: String,

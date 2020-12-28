@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const fs = require('fs')
+const moment = require('moment')
 const dbConnect = require('./dbConnect')
 const Article = require('./models/Article')
 const { create_article, create_index } = require('./ssr')
@@ -16,26 +17,33 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'))
 
 app.get('/secret', auth, (req, res) => res.send({message: 'welcome to the secrets'}))
 
-app.get('/create', (req, res) => res.sendFile(__dirname + `/create.html`))
+app.get('/create', auth, (req, res) => res.sendFile(__dirname + `/create.html`))
 
 setInterval(async () => {
+  const latest_article = await Article.findOne({published: true}).sort({'date': -1})
+  console.log(latest_article)
   const _article = await Article.find({published: false}).sort({'date': 1})
   const article = _article[0]
+
   if (article) {
-    console.log('slug', article.slug)
-    console.log(article)
-    await create_article(article)
-    await Article.updateOne({slug: article.slug}, {published: true})
-    await create_index()
-    console.log('publishing', article.title)
+    if (moment(latest_article.date).diff(moment(article.date), 'days') >= 1) {
+      await create_article(article)
+      await Article.updateOne({slug: article.slug}, {published: true})
+      await create_index()
+      console.log('publishing', article.title)
+    }
   }
   console.log('okey refreshing')
-}, 1000 * 10)
-// }, 1000 * 60 * 5)
+}, 1000 * 60 * 60) //en gång per timme
 
 app.get('/api/unpublished', async (req, res) => {
   const unpublished = await Article.find({published: false})
-  res.send(unpublished)
+  res.send({unpublished: unpublished.map(curr => curr.title)})
+})
+
+app.get('/api/unpublishedCount', async (req, res) => {
+  const unpublished = await Article.find({published: false}).countDocuments()
+  res.send({count: unpublished})
 })
 
 app.post('/api/post', async (req, res) => {
@@ -62,7 +70,5 @@ app.get('/:page', (req, res) =>
       : res.sendFile(__dirname + `/pages/error.html`)
   )
 )
-
-
 
 app.listen(port, () => console.log(`http://localhost:${port}`))
