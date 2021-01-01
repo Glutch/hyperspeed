@@ -56,7 +56,13 @@
       <input id="tags" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="javascript, nextjs">
       <div style="display:flex">
        <div id="add_article" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
-        Add Article to Queue
+        Add Article to Queue <span id="unpublishedCount"></span>
+       </div>
+       <div id="reset" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+        Reset
+       </div>
+       <div id="reset" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+        Post slug
        </div>
       </div>
      </div>
@@ -86,6 +92,13 @@
       }
     })
 
+    const get_count = async () => {
+      const res = await fetch('/api/unpublishedCount')
+      const json = await res.json()
+      document.getElementById('unpublishedCount').innerHTML = `(${json.count})`
+    }
+    get_count()
+
     document.getElementById('title').addEventListener('keyup', evt => {
       title = evt.target.value
       slug = slugify(title)
@@ -108,13 +121,26 @@
       document.getElementById('article_tags').innerHTML = tags.reduce((sum, tag) => sum += `<span style="padding: 1px 3px 3px 3px; border-radius: 3px; background: #000; color: #fff; margin-right: 3px;">${tag}</span>`, '')
     })
 
-    document.getElementById('add_article').addEventListener('click', evt => {
-      console.log(title, sub_header, slug, body)
-      fetch('/api/post', {
-        method: 'post',
-        body: JSON.stringify({title, slug, sub_header, body, tags}),
-        headers: { 'Content-Type': 'application/json' },
-      })
+    document.getElementById('add_article').addEventListener('click', async evt => {
+      if (title && sub_header && slug && body) {
+        const res = await fetch('/api/post', {
+          method: 'post',
+          body: JSON.stringify({title, slug, sub_header, body, tags}),
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const json = await res.json()
+        console.log(json)
+        alert(json.message)
+      } else {
+        alert('not good enuf')
+      }
+    })
+
+    document.getElementById('reset').addEventListener('click', evt => {
+      document.getElementById('title').value = ''
+      document.getElementById('sub_header').value = ''
+      document.getElementById('tags').value = ''
+      document.getElementById('textarea').value = ''
     })
 
     setInterval(() => {

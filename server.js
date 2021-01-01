@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const fs = require('fs')
 const moment = require('moment')
+const basicAuth = require('express-basic-auth')
 const dbConnect = require('./dbConnect')
 const Article = require('./models/Article')
 const { create_article, create_index } = require('./ssr')
@@ -10,8 +11,7 @@ const port = 3010
 app.use(express.static('public'))
 app.use(express.json())
 
-const auth = (req, res, next) =>
-  req.query.dromedardaze == '420stkorvar' ? next() : res.status(401).send()
+const auth = basicAuth({users: { 'dromedardaze': '420stkorvar' }, challenge: true})
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'))
 
@@ -21,12 +21,11 @@ app.get('/create', auth, (req, res) => res.sendFile(__dirname + `/create.html`))
 
 setInterval(async () => {
   const latest_article = await Article.findOne({published: true}).sort({'date': -1})
-  console.log(latest_article)
   const _article = await Article.find({published: false}).sort({'date': 1})
   const article = _article[0]
 
   if (article) {
-    if (moment(latest_article.date).diff(moment(article.date), 'days') >= 1) {
+    if (!moment(latest_article.date).isSame(moment(Date.now()), 'day')) {
       await create_article(article)
       await Article.updateOne({slug: article.slug}, {published: true})
       await create_index()
@@ -34,11 +33,11 @@ setInterval(async () => {
     }
   }
   console.log('okey refreshing')
-}, 1000 * 60 * 60) //en gång per timme
+}, 1000 * 10) //en gång per timme
 
 app.get('/api/unpublished', async (req, res) => {
   const unpublished = await Article.find({published: false})
-  res.send({unpublished: unpublished.map(curr => curr.title)})
+  res.send({unpublished: unpublished.map(curr => curr.slug)})
 })
 
 app.get('/api/unpublishedCount', async (req, res) => {
@@ -61,6 +60,16 @@ app.post('/api/post', async (req, res) => {
   } else {
     res.send({ message: 'slug exists' })
   }
+})
+
+app.get('/api/post-slug/:slug', async (req, res) => {
+  const slug = req.params.slug
+  const article = await Article.findOne({slug})
+  await create_article(article)
+  await Article.updateOne({slug}, {published: true})
+  await create_index()
+  res.send({message: `${slug} published`})
+  console.log(slug)
 })
 
 app.get('/:page', (req, res) =>
