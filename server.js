@@ -25,7 +25,7 @@ setInterval(async () => {
   const article = _article[0]
 
   if (article) {
-    if (!moment(latest_article.date).isSame(moment(Date.now()), 'day') || !latest_article) {
+    if (!latest_article || !moment(latest_article.date).isSame(moment(Date.now()), 'day')) {
       await create_article(article)
       await Article.updateOne({slug: article.slug}, {published: true})
       await create_index()
