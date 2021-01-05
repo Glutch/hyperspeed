@@ -24,6 +24,8 @@ setInterval(async () => {
   const _article = await Article.find({published: false}).sort({'date': 1})
   const article = _article[0]
 
+  console.log(moment(latest_article.date).isSame(moment(Date.now()), 'day'))
+
   if (article) {
     if (!moment(latest_article.date).isSame(moment(Date.now()), 'day')) {
       await create_article(article)
