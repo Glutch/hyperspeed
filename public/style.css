@@ -9,9 +9,18 @@ body {
   font-size: 18px;
   color: #fff;
 }
+
 img {
   max-width: 100%;
 }
+
+@media (max-width: 920px) {
+  img {
+    max-width: calc(100% + 80px);
+    margin: 0px -40px;
+  }
+}
+
 .logo {
   opacity: 0.3;
   transition: 0.3s;
@@ -92,7 +101,7 @@ main {
   width: 100%;
   max-width: 1000px;
   margin: auto;
-  padding: 40px 0px;
+  padding: 20px 0px;
 }
 article {
   max-width: 1000px;
