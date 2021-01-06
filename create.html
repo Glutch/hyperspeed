@@ -61,8 +61,18 @@
        <div id="reset" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
         Reset
        </div>
-       <div id="reset" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+       <div id="" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
         Post slug
+       </div>
+       <div id="upload_image" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+        Upload image
+       </div>
+       <form method="post" action="api/upload_image" enctype="multipart/form-data">
+          <input type="file" name="image" /><br /><br />
+          <button type="submit" name="upload">Upload</button>
+        </form>
+       <div>
+         <a href="https://spec.commonmark.org/0.29">markdown spec</a>
        </div>
       </div>
      </div>

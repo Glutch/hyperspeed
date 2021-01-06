@@ -35,8 +35,24 @@ const markdown = md({
       } catch (__) {}
     }
     return ''
+  },
+  modifyToken: function (token, env) {
+    //test webp & quality 0.6-0.7
+    switch (token.type) {
+    case 'image':
+      // token.attrObj.srcset = `${token.attrObj.src.replace('-3x', '-1x')} 1x, ${token.attrObj.src.replace('-3x', '-2x')} 2x, ${token.attrObj.src} 3x`;
+      token.attrObj.srcset = `${token.attrObj.src.replace('big', 'smallest')} 460w,
+                              ${token.attrObj.src.replace('big', 'small')} 920w,
+                              ${token.attrObj.src.replace('big', 'normal')} 1840w,
+                              ${token.attrObj.src.replace('big', 'big')} 2760w`
+      token.attrObj.sizes = '(max-width: 460px) 460px, 920px'
+      break;
+    case 'link_open':
+      token.attrObj.target = '_blank'; // set all links to open in new window
+      break;
+    }
   }
-})
+}).use(require('markdown-it-modify-token')); // <-- this use(package_name) is required
 
 const generate_article = (article, content) => prettify(`
 <!DOCTYPE html>
@@ -49,7 +65,27 @@ const generate_article = (article, content) => prettify(`
     <title>${article.title}</title>
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="preload" href="fonts/FiraCode-Medium.ttf" as="font">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "image": "https://glutch.dev/favicon.png",
+        "author": {
+          "@type": "Person",
+          "name": "Glutch"
+        },
+        "headline": "${article.title}",
+        "datePublished": "${moment(article.date).format('MMMM Do YYYY')}",
+        "publisher": {
+          "@type": "Organization",
+          "name": "glutch.dev",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://glutch.dev/favicon.png"
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     ${header}
@@ -70,7 +106,6 @@ const generate_index = content => prettify(`
     <title>quikker</title>
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="preload" href="fonts/FiraCode-Medium.ttf" as="font">
   </head>
   <body>
     ${header}

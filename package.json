@@ -16,7 +16,12 @@
     "highlight.js": "^10.4.1",
     "html-prettify": "^1.0.3",
     "markdown-it": "^12.0.4",
+    "markdown-it-modify-token": "^1.0.2",
+    "markdown-it-responsive": "^0.1.0",
     "moment": "^2.29.1",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "sharp": "^0.27.0"
   }
 }

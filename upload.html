@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+  <form style="background: #dcdcdc; padding: 20px;" method="post" action="api/upload_image" enctype="multipart/form-data">
+    <p>upload image from computer</p>
+    <input type="file" name="image" /><br /><br />
+    <button type="submit" name="upload">Upload</button>
+  </form>
+  
+  <form style="background: #dcdcdc; padding: 20px; margin-top: 20px;" method="post" action="api/download_image" enctype="multipart/form-data">
+    <p>download image from url</p>
+    <input type="text" name="url" value="https://images.unsplash.com/photo-1602525653218-cac7c9e38807?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80" /><br /><br />
+    <button type="submit" name="upload">Upload</button>
+  </form>
+</body>
+</html>

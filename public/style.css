@@ -1,9 +1,16 @@
+@font-face {
+  font-family: "Fira Code";
+  src: url("/fonts/FiraCode-Medium.ttf") format("truetype");
+}
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0px;
   background: #000;
   font-size: 18px;
   color: #fff;
+}
+img {
+  max-width: 100%;
 }
 .logo {
   opacity: 0.3;
