@@ -14,10 +14,13 @@ img {
   max-width: 100%;
 }
 
-@media (max-width: 920px) {
+@media (max-width: 800px) {
+  h1 {
+    font-size: 34px;
+  }
   img {
     max-width: calc(100% + 80px);
-    margin: 0px -40px;
+    margin: 0px -20px;
   }
 }
 
@@ -106,7 +109,7 @@ main {
 article {
   max-width: 1000px;
   width: 100%;
-  padding: 0px 40px;
+  padding: 0px 20px;
 }
 * {
   box-sizing: border-box;
