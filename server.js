@@ -46,11 +46,11 @@ app.post('/api/download_image', upload.single('image'), async (req, res) => {
 
   await sharp(blob)
     .resize({width: 920 * 1})
-    .toFile('public/images/' + filename + 'small.webp')
+    .toFile('public/images/' + filename + '-small.webp')
 
   await sharp(blob)
     .resize({width: 920 / 2})
-    .toFile('public/images/' + filename + 'smallest.webp')
+    .toFile('public/images/' + filename + '-smallest.webp')
 
   return res.status(200).redirect('/images/' + filename + '-big.webp')
 })
@@ -68,11 +68,11 @@ app.post('/api/upload_image', upload.single('image'), async (req, res) => {
 
   await sharp(req.file.buffer)
     .resize({width: 920 * 1})
-    .toFile('public/images/' + filename + 'small.webp')
+    .toFile('public/images/' + filename + '-small.webp')
 
   await sharp(req.file.buffer)
     .resize({width: 920 / 2})
-    .toFile('public/images/' + filename + 'smallest.webp')
+    .toFile('public/images/' + filename + '-smallest.webp')
 
   return res.status(200).redirect('/images/' + filename + '-big.webp')
 })
