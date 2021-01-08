@@ -60,9 +60,25 @@ const generate_article = (article, content) => prettify(`
   <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="favicon.png" />
+    <title>${article.title}</title>
+    <meta name="title" content="${article.title}">
     <meta name="description" content="${article.sub_header}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${article.title}</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://glutch.dev/">
+    <meta property="og:title" content="glutch.dev - programming tutorials">
+    <meta property="og:description" content="super quick tutorials on a super fast website">
+    <meta property="og:image" content="https://glutch.dev/big_logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://glutch.dev/">
+    <meta property="twitter:title" content="glutch.dev - programming tutorials">
+    <meta property="twitter:description" content="super quick tutorials on a super fast website">
+    <meta property="twitter:image" content="https://glutch.dev/big_logo.png">
+    
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
     <script type="application/ld+json">
@@ -101,9 +117,27 @@ const generate_index = content => prettify(`
   <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="favicon.png" />
-    <meta name="description" content="super quick tutorials on a super fast website">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>quikker</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>glutch.dev - programming tutorials</title>
+    <meta name="title" content="glutch.dev - programming tutorials">
+    <meta name="description" content="super quick tutorials on a super fast website">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://glutch.dev/">
+    <meta property="og:title" content="glutch.dev - programming tutorials">
+    <meta property="og:description" content="super quick tutorials on a super fast website">
+    <meta property="og:image" content="https://glutch.dev/big_logo.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://glutch.dev/">
+    <meta property="twitter:title" content="glutch.dev - programming tutorials">
+    <meta property="twitter:description" content="super quick tutorials on a super fast website">
+    <meta property="twitter:image" content="https://glutch.dev/big_logo.png">
+    
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
   </head>

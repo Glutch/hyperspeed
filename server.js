@@ -7,6 +7,7 @@ const dbConnect = require('./dbConnect')
 const Article = require('./models/Article')
 const multer = require('multer')
 const sharp = require('sharp')
+const generate_sitemap = require('./api/sitemap')
 const fetch = require('node-fetch')
 const { create_article, create_index } = require('./ssr')
 const port = 3010
@@ -138,10 +139,11 @@ setInterval(async () => {
     }
   }
   console.log('okey refreshing')
+  generate_sitemap()
 }, 1000 * 60 * 60 * 1) //en gång per timme
 
 app.listen(port, () => console.log(`http://localhost:${port}`))
-
+generate_sitemap()
 
 
 

@@ -1,1 +1,2 @@
-User-agent: *User-agent: *
+User-agent: *
+Sitemap: https://glutch.dev/sitemap.xml
