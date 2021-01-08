@@ -172,7 +172,7 @@ const create_index = async () => {
     content += `
       <a href="/${article.slug}" style="padding: 20px; background: #000; margin-bottom: 10px; width: 100%; max-width: 900px; border-bottom: 2px solid #222">
         <div style="display: flex; align-items: center;">
-          ${article.tags && article.tags.reduce((sum, tag) => sum += `<div style="padding: 3px 5px; color: #000; font-size: 12px; background: #fff; border-radius: 2px; margin-right: 5px">${tag}</div>`, '')}
+          ${article.tags && article.tags.reduce((sum, tag) => sum += `<div style="font-size: 14px; margin-right: 5px">#${tag}</div>`, '')}
           <div style="font-size: 14px; color: #999">${moment(article.date).format('MMMM Do YYYY')}</div>
         </div>
         <h1 style="margin-top: 10px; margin-bottom: 0; font-size: 34px">${article.title}</h1>
