@@ -145,10 +145,6 @@ setInterval(async () => {
 app.listen(port, () => console.log(`http://localhost:${port}`))
 generate_sitemap()
 
-
-
-
-
 // app.post('/api/download_image', upload.single('image'), async (req, res) => {
 //   const filename = Date.now()
 //   const url = req.body.url

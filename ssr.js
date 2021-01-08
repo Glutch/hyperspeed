@@ -68,15 +68,15 @@ const generate_article = (article, content) => prettify(`
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://glutch.dev/">
-    <meta property="og:title" content="glutch.dev - programming tutorials">
-    <meta property="og:description" content="super quick tutorials on a super fast website">
+    <meta property="og:title" content="${article.title}">
+    <meta property="og:description" content="${article.sub_header}">
     <meta property="og:image" content="https://glutch.dev/big_logo.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://glutch.dev/">
-    <meta property="twitter:title" content="glutch.dev - programming tutorials">
-    <meta property="twitter:description" content="super quick tutorials on a super fast website">
+    <meta property="twitter:title" content="${article.title}">
+    <meta property="twitter:description" content="${article.sub_header}">
     <meta property="twitter:image" content="https://glutch.dev/big_logo.png">
     
     <link rel="preload" as="style" href="style.css">
