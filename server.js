@@ -133,7 +133,7 @@ setInterval(async () => {
     if (!latest_article || !moment(latest_article.date).isSame(moment(Date.now()), 'day')) {
     // if (true) {
       await create_article(article)
-      await Article.updateOne({slug: article.slug}, {published: true})
+      await Article.updateOne({slug: article.slug}, {date: Date.now(), published: true})
       await create_index()
       console.log('publishing', article.title)
     }
