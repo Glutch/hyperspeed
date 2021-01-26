@@ -54,27 +54,31 @@
        tags <span id="article_tags"></span>
       </div>
       <input id="tags" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="javascript, nextjs">
+      
       <div style="display:flex">
        <div id="add_article" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
-        Add Article to Queue <span id="unpublishedCount"></span>
+        Add to Queue <span id="unpublishedCount"></span>
        </div>
        <div id="reset" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
         Reset
        </div>
-       <div id="" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
-        Post slug
+       <div style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+         <a target="_blank" href="https://glutch.dev/upload">upload image</a>
        </div>
-       <div id="upload_image" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
-        Upload image
-       </div>
-       <form method="post" action="api/upload_image" enctype="multipart/form-data">
-          <input type="file" name="image" /><br /><br />
-          <button type="submit" name="upload">Upload</button>
-        </form>
-       <div>
-         <a href="https://spec.commonmark.org/0.29">markdown spec</a>
+       <div style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+         <a target="_blank" href="https://spec.commonmark.org/0.29">markdown</a>
        </div>
       </div>
+
+      <div style="margin-top: 40px; display:flex; flex-direction: column;">
+        <div style="font-size:22px;margin:0px 0px 10px 0px">
+          Edit article
+         </div>
+        <input id="edit" style="padding:20px;border:0;border-radius:5px;margin-bottom:10px;font-size:20px;outline:none;font-family:Lora;max-width:900px" placeholder="insert article url to edit">
+        <div id="edit_article_btn" style="padding:10px;border:2px solid;margin-top:10px;width:300px;border-radius:5px;cursor:pointer;background:#fff; color: #000;">
+         Pull data from mongodb
+        </div>
+       </div>
      </div>
     </div>
    </div>
@@ -107,6 +111,12 @@
       const json = await res.json()
       document.getElementById('unpublishedCount').innerHTML = `(${json.count})`
     }
+
+    const get_count = async () => {
+      const res = await fetch('/api/unpublishedCount')
+      const json = await res.json()
+      document.getElementById('unpublishedCount').innerHTML = `(${json.count})`
+    }
     get_count()
 
     document.getElementById('title').addEventListener('keyup', evt => {
@@ -124,6 +134,10 @@
     document.getElementById('toggle').addEventListener('click', evt => {
       toggled = !toggled
       document.getElementById('textareaBox').style.display = toggled ? 'flex' : 'none'
+    })
+
+    document.getElementById('edit_article_btn').addEventListener('click', evt => {
+      console.log(document.getElementById('edit').value)
     })
 
     document.getElementById('tags').addEventListener('keyup', evt => {

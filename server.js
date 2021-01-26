@@ -78,6 +78,12 @@ app.post('/api/upload_image', upload.single('image'), async (req, res) => {
   return res.status(200).redirect('/images/' + filename + '-big.webp')
 })
 
+app.get('/api/article/:slug', async (req, res) => {
+  const slug = req.params.slug
+  const article = await Article.findOne({slug})
+  res.send(article)
+})
+
 app.get('/api/unpublished', async (req, res) => {
   const unpublished = await Article.find({published: false})
   res.send({unpublished: unpublished.map(curr => curr.slug)})
@@ -87,7 +93,6 @@ app.get('/api/unpublishedCount', async (req, res) => {
   const unpublished = await Article.find({published: false}).countDocuments()
   res.send({count: unpublished})
 })
-
 
 app.post('/api/post', async (req, res) => {
   const article = req.body
